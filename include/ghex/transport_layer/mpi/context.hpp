@@ -11,6 +11,8 @@
 #ifndef INCLUDED_TL_MPI_CONTEXT_HPP
 #define INCLUDED_TL_MPI_CONTEXT_HPP
 
+#include <vector>
+
 #include "../context.hpp"
 #include "./communicator.hpp"
 #include "../communicator.hpp"
@@ -52,14 +54,21 @@ namespace gridtools {
 
             };
 
+            static std::vector<std::unique_ptr<context<mpi_tag>>> mpi_context_repository;
+
             template<>
             struct context_factory<mpi_tag>
             {
-                static std::unique_ptr<context<mpi_tag>> create(MPI_Comm mpi_comm)
+                static context<mpi_tag>& create(MPI_Comm mpi_comm)
                 {
                     auto new_comm = detail::clone_mpi_comm(mpi_comm);
-                    return std::unique_ptr<context<mpi_tag>>{
-                        new context<mpi_tag>{new_comm, new_comm}};
+                    mpi_context_repository.push_back(std::unique_ptr<context<mpi_tag>>{
+                            new context<mpi_tag>{new_comm, new_comm}});
+                    return *mpi_context_repository[mpi_context_repository.size()-1];
+                }
+
+                static void destroy() {
+                    mpi_context_repository.clear();
                 }
             };
 
