@@ -260,6 +260,7 @@ TEST(low_level, basic_unidirectional_vector) {
     else if (rank == 0) {
         run_test(test_func);
     }
+    gridtools::ghex::tl::destroy();
 }
 // TEST(low_level, basic_unidirectional_buffer) {
 //     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
