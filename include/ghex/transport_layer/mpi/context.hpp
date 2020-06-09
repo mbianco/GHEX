@@ -52,8 +52,8 @@ namespace gridtools {
 
             };
 
-            context<mpi_tag>& create(MPI_Comm mpi_comm);
-            void destroy();
+            context<mpi_tag>& create_context(MPI_Comm mpi_comm);
+            void destroy_contexts();
             // template<>
             // struct context_factory<mpi_tag>
             // {

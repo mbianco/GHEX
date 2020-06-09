@@ -54,7 +54,7 @@ namespace gridtools {
 
                 friend class context_factory<TransportTag>;
 
-                friend context<mpi_tag>& create(MPI_Comm mpi_comm);
+                friend context<mpi_tag>& create_context(MPI_Comm mpi_comm);
 
             private: // members
                 MPI_Comm m_mpi_comm;

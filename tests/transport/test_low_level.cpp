@@ -251,7 +251,7 @@ TEST(low_level, basic_unidirectional_vector) {
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
     //    auto context_ptr = gridtools::ghex::tl::context_factory<transport>::create(MPI_COMM_WORLD);
-    auto& context = gridtools::ghex::tl::create(MPI_COMM_WORLD);
+    auto& context = gridtools::ghex::tl::create_context(MPI_COMM_WORLD);
     using MsgType = std::vector<unsigned char>;
     auto test_func = [&context]() mutable { return test_unidirectional<MsgType>(context);};
     if (rank == 1) {
@@ -260,7 +260,7 @@ TEST(low_level, basic_unidirectional_vector) {
     else if (rank == 0) {
         run_test(test_func);
     }
-    gridtools::ghex::tl::destroy();
+    gridtools::ghex::tl::destroy_contexts();
 }
 // TEST(low_level, basic_unidirectional_buffer) {
 //     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
