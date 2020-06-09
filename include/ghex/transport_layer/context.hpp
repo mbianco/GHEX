@@ -23,12 +23,12 @@ namespace gridtools {
 
             namespace detail {
 
-                static MPI_Comm clone_mpi_comm(MPI_Comm mpi_comm) {
-                    // clone the communicator first to be independent of user calls to the mpi runtime
-                    MPI_Comm new_comm;
-                    MPI_Comm_dup(mpi_comm, &new_comm);
-                    return new_comm;
-                }
+                // static MPI_Comm clone_mpi_comm(MPI_Comm mpi_comm) {
+                //     // clone the communicator first to be independent of user calls to the mpi runtime
+                //     MPI_Comm new_comm;
+                //     MPI_Comm_dup(mpi_comm, &new_comm);
+                //     return new_comm;
+                // }
 
             }
 
@@ -53,6 +53,8 @@ namespace gridtools {
                 using communicator_type      = typename transport_context_type::communicator_type;
 
                 friend class context_factory<TransportTag>;
+
+                friend context<mpi_tag>& create(MPI_Comm mpi_comm);
 
             private: // members
                 MPI_Comm m_mpi_comm;

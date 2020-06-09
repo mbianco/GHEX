@@ -52,16 +52,18 @@ namespace gridtools {
 
             };
 
-            template<>
-            struct context_factory<mpi_tag>
-            {
-                static std::unique_ptr<context<mpi_tag>> create(MPI_Comm mpi_comm)
-                {
-                    auto new_comm = detail::clone_mpi_comm(mpi_comm);
-                    return std::unique_ptr<context<mpi_tag>>{
-                        new context<mpi_tag>{new_comm, new_comm}};
-                }
-            };
+            context<mpi_tag>& create(MPI_Comm mpi_comm);
+
+            // template<>
+            // struct context_factory<mpi_tag>
+            // {
+            //     static std::unique_ptr<context<mpi_tag>> create(MPI_Comm mpi_comm)
+            //     {
+            //         auto new_comm = detail::clone_mpi_comm(mpi_comm);
+            //         return std::unique_ptr<context<mpi_tag>>{
+            //             new context<mpi_tag>{new_comm, new_comm}};
+            //     }
+            // };
 
         }
     }

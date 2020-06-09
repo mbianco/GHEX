@@ -1,9 +1,12 @@
 
-set(_tests test_low_level test_send_multi test_cancel test_context test_send_recv)
+set(_tests test_low_level ) #test_send_multi test_cancel test_context test_send_recv)
 
 foreach(t_ ${_tests})
+  add_library(context_factory SHARED ../../src/contex_factories_mpi.cpp)
+  target_link_libraries(context_factory gtest_main_mt)
+
     add_executable( ${t_} ./${t_}.cpp )
-    target_link_libraries(${t_} gtest_main_mt)
+    target_link_libraries(${t_} gtest_main_mt context_factory)
     add_test(
         NAME ${t_}
         COMMAND ${MPIEXEC_EXECUTABLE} ${MPIEXEC_NUMPROC_FLAG} 4 ${MPIEXEC_PREFLAGS} $<TARGET_FILE:${t_}> ${MPIEXEC_POSTFLAGS}
